@@ -1,0 +1,11 @@
+# nicht in Github hochladen, ZIP hat ca 230MB
+
+# GFTS data
+data/*.zip 
+*.db
+
+__pycache__/
+*.pyc 
+route_map.html
+
+# 
