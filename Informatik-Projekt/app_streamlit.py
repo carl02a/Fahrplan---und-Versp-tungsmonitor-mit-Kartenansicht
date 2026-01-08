@@ -29,7 +29,8 @@ def cached_departures(stop_id: str, limit: int):
     cache_db.init_db(con)
 
     # 4) Abfahrten aus Cache holen
-    return cache_db.get_next_departures_cached(con, stop_id, active_trip_route, limit)
+    next_departures = cache_db.get_next_departures_cached(con, stop_id, active_trip_route, limit)
+    return next_departures
 
 
 st.set_page_config(layout="wide", page_title="GTFS Mobility Dashboard", page_icon="🚆")
