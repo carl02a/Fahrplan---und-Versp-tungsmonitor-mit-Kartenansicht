@@ -40,6 +40,14 @@ def load_stops(zip_path: str) -> Dict[str, Stop]:
             continue
     return stops
 
+# stops.py
+def child_stop_ids(stops_by_id, parent_id):
+    return [
+        s.stop_id
+        for s in stops_by_id.values()
+        if getattr(s, "parent_station", None) == parent_id
+    ]
+
     """
     Lädt alle Haltestellen (Stops) aus stops.txt und baut ein Mapping stop_id -> Stop.
 

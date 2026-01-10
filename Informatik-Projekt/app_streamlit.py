@@ -164,9 +164,18 @@ with col1:
         st.code(str(e))
         st.stop()
 
-    if not deps:
-        st.info("Keine Abfahrten gefunden (Datum/Wochentag/Feed).")
-        st.stop()
+    deps = cached_departures(selected_stop.stop_id, limit=20)
+
+# Schritt B: Fallback auf Child-Stops
+if not deps:
+    child_ids = stops.child_stop_ids(STOPS_DICT, selected_stop.stop_id)
+    for cid in child_ids:
+        deps.extend(cached_departures(cid, limit=20))
+
+# ERST JETZT abbrechen, falls wirklich nichts da ist
+if not deps:
+    st.info("Keine Abfahrten gefunden (Datum/Wochentag/Feed).")
+    st.stop()
 
     dep_labels = [_dep_label(d) for d in deps]
 
