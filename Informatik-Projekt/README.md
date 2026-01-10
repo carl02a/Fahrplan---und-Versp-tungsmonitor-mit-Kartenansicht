@@ -153,6 +153,20 @@ Dargestellt werden:
 pip install folium
 ```
 
+1-streamlit
+bash
+pip install streamlit
+
+2-folium
+bash
+pip install folium
+
+3-streamlit-folium
+bash
+pip install streamlit-folium
+
+
+
 ### Vorbereitung
 - GTFS-ZIP-Datei in `data/feed.zip` ablegen
 - Datei **nicht entpacken**
