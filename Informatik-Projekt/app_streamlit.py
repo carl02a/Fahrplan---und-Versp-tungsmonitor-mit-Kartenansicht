@@ -6,6 +6,8 @@ from streamlit_folium import folium_static
 import stops
 import departures
 import cache_db
+from config import GTFS_ZIP_PATH
+
 
 FEED_ZIP = "data/feed.zip"
 DB_PATH = "gtfs_cache.db"
@@ -28,6 +30,15 @@ def cached_departures(stop_id: str, limit: int):
     con = cache_db.connect(DB_PATH)
     cache_db.init_db(con)
 
+    if not cache_db.has_cached_stop(con, stop_id):
+        print("\n4) Cache für diesen Bahnhof existiert noch nicht.")
+        print("   Ich scanne stop_times.txt EINMAL für diesen stop_id.")
+        print("   Das kann (je nach Bahnhof) ein bisschen dauern, danach ist es schnell.")
+        inserted = cache_db.build_cache_for_stop(GTFS_ZIP_PATH, con, stop_id)
+        print(f"   Cache-Zeilen gespeichert: {inserted}")
+    else:
+        print("\n4) Cache vorhanden – Abfahrten werden schnell geladen.")
+
     # 4) Abfahrten aus Cache holen
     next_departures = cache_db.get_next_departures_cached(con, stop_id, active_trip_route, limit)
     return next_departures
@@ -36,7 +47,6 @@ def cached_departures(stop_id: str, limit: int):
 st.set_page_config(layout="wide", page_title="GTFS Mobility Dashboard", page_icon="🚆")
 
 st.title("🚆 GTFS Mobility Dashboard (Deutschland)")
-st.write("APP LÄUFT ✅ (bis hierhin)")
 
 # ---------------------------
 # Helpers: kompatibel zu mehreren Backend-Varianten
@@ -163,8 +173,6 @@ with col1:
         st.error("Fehler beim Laden der Abfahrten aus GTFS:")
         st.code(str(e))
         st.stop()
-
-    deps = cached_departures(selected_stop.stop_id, limit=20)
 
 # Schritt B: Fallback auf Child-Stops
 if not deps:

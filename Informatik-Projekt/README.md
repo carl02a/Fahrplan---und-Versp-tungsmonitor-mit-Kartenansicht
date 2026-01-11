@@ -1,5 +1,5 @@
 Abfahrtsplan von deutschen Bahnhöfen. Mit einer Visualisierung auf einer Karte des (Punkt zu Punkt) Streckenverlaufs
-GFTS - Zip Datei von gtfs.de
+GFTS - Zip Datei von gtfs.de - Deutschland gesamt (https://gtfs.de/de/feeds/de_full/)
 
 Nähere  Erläuterung:
 # GTFS-Abfahrtsmonitor mit Routenvisualisierung (Deutschland)
@@ -149,22 +149,21 @@ Dargestellt werden:
 - ca. 300 MB freier Speicherplatz für den GTFS-Feed
 
 ### Installation
+
+1-streamlit
+```bash
+pip install streamlit
+```
+
+2-folium
 ```bash
 pip install folium
 ```
 
-1-streamlit
-bash
-pip install streamlit
-
-2-folium
-bash
-pip install folium
-
 3-streamlit-folium
-bash
+```bash
 pip install streamlit-folium
-
+```
 
 
 ### Vorbereitung
